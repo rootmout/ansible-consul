@@ -90,14 +90,14 @@
     "disable_keyring_file": true,
     {% endif %}
     {% if consul_tls_enable | bool %}
-    "ca_file": "{{ consul_tls_dir }}/{{ consul_tls_ca_crt | basename }}",
+    "ca_file": "{{ consul_tls_dir }}/ca.pem",
     {% if auto_encrypt is not defined or (auto_encrypt is defined and not auto_encrypt.enabled | bool)
         or (item.config_version != 'client') | bool %}
-    "cert_file": "{{ consul_tls_dir }}/{{ consul_tls_server_crt | basename }}",
-    "key_file": "{{ consul_tls_dir }}/{{ consul_tls_server_key | basename }}",
+    "cert_file": "{{ consul_tls_dir }}/server_crt.pem",
+    "key_file": "{{ consul_tls_dir }}/server_key.pem",
     "verify_incoming": {{ consul_tls_verify_incoming | bool | to_json }},
     {% else %}
-    "verify_incoming": false, 
+    "verify_incoming": false,
     {% endif %}
     "verify_outgoing": {{ consul_tls_verify_outgoing | bool | to_json }},
     "verify_incoming_rpc": {{consul_tls_verify_incoming_rpc | bool| to_json }},
